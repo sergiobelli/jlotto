@@ -4,6 +4,7 @@
 
 package net.sb.jlotto.cli;
 
+import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -40,5 +41,9 @@ public class JLottoApp extends SingleFrameApplication {
      */
     public static void main(String[] args) {
         launch(JLottoApp.class, args);
+    }
+
+    @Action
+    public void openEstrazione() {
     }
 }

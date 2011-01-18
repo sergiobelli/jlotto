@@ -1,6 +1,6 @@
 package net.sb.jlotto.srv.core.model;
 
-public 	class CarattereValore {
+public 	class CarattereValore implements JLottoModel {
 	private String lettera;
 	private Integer valore;
 	public CarattereValore(String lettera,Integer valore) {

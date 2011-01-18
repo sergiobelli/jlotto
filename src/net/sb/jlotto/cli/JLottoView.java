@@ -16,9 +16,12 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class JLottoView extends FrameView {
 
+    private final LottoHelper lottoHelper = new LottoHelper();
+    
     public JLottoView(SingleFrameApplication app) {
         super(app);
 
@@ -89,6 +92,16 @@ public class JLottoView extends FrameView {
         JLottoApp.getApplication().show(aboutBox);
     }
 
+    @Action
+    public void showEstrazione() {
+        if (estrazione == null) {
+            JFrame mainFrame = JLottoApp.getApplication().getMainFrame();
+            estrazione = new JLottoEstrazioneBox(mainFrame);
+            estrazione.setLocationRelativeTo(mainFrame);
+        }
+        JLottoApp.getApplication().show(estrazione);
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -106,6 +119,8 @@ public class JLottoView extends FrameView {
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        appsMenu = new javax.swing.JMenu();
+        estrazioniJMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -147,7 +162,7 @@ public class JLottoView extends FrameView {
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtInserimento, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
@@ -160,7 +175,7 @@ public class JLottoView extends FrameView {
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtInserimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -179,6 +194,18 @@ public class JLottoView extends FrameView {
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
+
+        appsMenu.setAction(actionMap.get("quit")); // NOI18N
+        appsMenu.setText(resourceMap.getString("appsMenu.text")); // NOI18N
+        appsMenu.setName("appsMenu"); // NOI18N
+
+        estrazioniJMenuItem.setAction(actionMap.get("showEstrazione")); // NOI18N
+        estrazioniJMenuItem.setText(resourceMap.getString("estrazioniJMenuItem.text")); // NOI18N
+        estrazioniJMenuItem.setName("estrazioniJMenuItem"); // NOI18N
+        estrazioniJMenuItem.setSelected(true);
+        appsMenu.add(estrazioniJMenuItem);
+
+        menuBar.add(appsMenu);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
@@ -236,10 +263,13 @@ public class JLottoView extends FrameView {
     }//GEN-LAST:event_txtInserimentoKeyTyped
 
     private void txtInserimentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInserimentoKeyReleased
-        this.txtRisultato.setText(new LottoHelper().calcola(this.txtInserimento.getText().toUpperCase()).toString());
+        String testoInserito = this.txtInserimento.getText().toUpperCase();
+        this.txtRisultato.setText(lottoHelper.calcola(testoInserito).toString());
     }//GEN-LAST:event_txtInserimentoKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu appsMenu;
+    javax.swing.JMenuItem estrazioniJMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel mainPanel;
@@ -259,4 +289,5 @@ public class JLottoView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+    private JDialog estrazione;
 }
