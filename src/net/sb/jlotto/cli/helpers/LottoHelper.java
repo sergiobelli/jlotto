@@ -5,6 +5,7 @@ import net.sb.jlotto.srv.core.ICalcolatore;
 
 /**
  * @author sbelli
+ * 
  */
 public class LottoHelper {
 
